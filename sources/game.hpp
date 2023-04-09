@@ -7,18 +7,20 @@
 namespace ariel{
     class Game {
     private:
-        Player& Player1_;
-        Player& Player2_;
+        Player& player1_;
+        Player& player2_;
         vector<Card> deck_;
+        vector<Card> cardGame_;
+        vector<pair <Card, Card>> log_;
     public:
-        Game(Player& Player1, Player& Player2) : Player1_(Player1), Player2_(Player2) {}
+        Game(Player& Player1, Player& Player2);
         ~Game(){}
-        void playAll(){}
-        void printWiner(){}
-        void printLog(){}
-        void printStats(){}
-        void printLastTurn(){}
-        void playTurn(){}
+        void playAll();
+        void printWiner();
+        void printLog();
+        void printStats();
+        void printLastTurn();
+        void playTurn();
     };
 }
 

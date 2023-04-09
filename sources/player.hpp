@@ -11,21 +11,20 @@ using namespace std;
 namespace ariel {
     class Player {
     private:
-        string name;
-        vector<Card> myStack;
+        string name_;
+        vector<Card> myStack_;
+        vector<Card> cardsTaken_;
 
     public:
-        Player(const std::string name);
+        Player(const string& name);
         ~Player();
-        void add(Card& card){myStack.push_back(card);}
-        static int stacksize();
-        static int cardesTaken();
+        void add(Card& card);
+        void addcardsTaken(Card& card);
+        int stacksize() const;
+        int cardesTaken() const;
+        string getName() const;
+        Card getCard();
     };
 
-    Player::Player(const std::string name){
-       this->name = name;
-    }
-
-    Player::~Player(){}
 }
 #endif
