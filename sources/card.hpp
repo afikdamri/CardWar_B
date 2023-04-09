@@ -2,22 +2,45 @@
 #define CARD_HPP
 
 #include <string>
+using namespace std;
 
 namespace ariel{
+    enum Rank{
+        TWO = 2,
+        THREE,
+        FOUR,
+        FIVE,
+        SIX,
+        SEVEN,
+        EIGHT,
+        NINE,
+        TEN,
+        JACK,
+        QUEEN,
+        KING,
+        ACE,
+    };
+
+    enum Suit{
+        CLUBS, DIAMONDS, HEARTS, SPADES,
+    };
 
     class Card {
     private:
-        std::string suit; // stores the suit of the card (e.g. "hearts", "spades")
-        std::string rank; // stores the rank of the card (e.g. "ace", "king", "queen", "jack", "10", "9", ...)
+        Suit suit_;
+        Rank rank_;
     public:
-        Card(std::string cardSuit, std::string cardRand);
-        ~Card();
-//      std::string getSuit() const;
-//      std::string getRank() const;
-//      std::string getName() const;
-//      int getValue() const;
-//      bool operator<(const Card& other) const;
-//      bool operator==(const Card& other) const;
+        Card(Suit suit, Rank rank);
+        ~Card(){};
+        Suit getSuit() const;
+        Rank getRank() const;
+        void printSuit() const;
+        void printRank() const;
+        void toString() const;
+        bool operator>(const Card& card) const;
+        bool operator<(const Card& card) const;
+        bool operator==(const Card& card) const;
+
     };
 
 }

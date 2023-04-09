@@ -2,14 +2,16 @@
 #define GAME_HPP
 
 #include "player.hpp"
+#include<vector>
 
 namespace ariel{
     class Game {
     private:
-        Player& one;
-        Player& two;
+        Player& Player1_;
+        Player& Player2_;
+        vector<Card> deck_;
     public:
-        Game(Player& gamePlayer_1, Player& gamePlayer_2) : one(gamePlayer_1), two(gamePlayer_2) {}
+        Game(Player& Player1, Player& Player2) : Player1_(Player1), Player2_(Player2) {}
         ~Game(){}
         void playAll(){}
         void printWiner(){}
