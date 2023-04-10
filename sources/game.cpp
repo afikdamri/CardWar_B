@@ -50,34 +50,39 @@ namespace ariel {
     }
 
     void Game::playTurn(){
+        if (&player1_ == &player2_) {
+            throw invalid_argument("Player cannot play against himself.");
+        }
         if(player1_.stacksize() != 0 && player2_.stacksize() != 0){
             Card cardPlayer1 = player1_.getCard();
             Card cardPlayer2 = player2_.getCard();
             cardGame_.push_back(cardPlayer1);
             cardGame_.push_back(cardPlayer2);
             log_.push_back(make_pair(cardPlayer1, cardPlayer2));
-        if (cardGame_.size() >= 2 && cardGame_.back() > cardGame_[cardGame_.size() - 2]) {
-            for (size_t i = 0; i < cardGame_.size(); i++) {
-                player2_.add(cardGame_[i]);
-                player1_.takeCard();
+            if (cardGame_.size() >= 2 && cardGame_.back() > cardGame_[cardGame_.size() - 2]) {
+                for (size_t i = 0; i < cardGame_.size(); i++) {
+                    player2_.add(cardGame_[i]);
+                    player1_.takeCard();
+                }
+                cardGame_.clear();
+            } else if (cardGame_.size() >= 2 && cardGame_.back() < cardGame_[cardGame_.size() - 2]) {
+                for (size_t i = 0; i < cardGame_.size(); i++) {
+                    player1_.add(cardGame_[i]);
+                    player2_.takeCard();
+                }
+                cardGame_.clear();
+            } else {
+                cardPlayer1 = player1_.getCard();
+                cardPlayer2 = player2_.getCard();
+                draw_++;
+                if (player1_.stacksize() != 0 && player2_.stacksize() != 0) {
+                    cardGame_.push_back(cardPlayer1);
+                    cardGame_.push_back(cardPlayer2);
+                }
             }
-            cardGame_.clear();
-        } else if (cardGame_.size() >= 2 && cardGame_.back() < cardGame_[cardGame_.size() - 2]) {
-            for (size_t i = 0; i < cardGame_.size(); i++) {
-                player1_.add(cardGame_[i]);
-                player2_.takeCard();
-            }
-            cardGame_.clear();
-        } else {
-            cardPlayer1 = player1_.getCard();
-            cardPlayer2 = player2_.getCard();
-            draw_++;
-            if (player1_.stacksize() != 0 && player2_.stacksize() != 0) {
-                cardGame_.push_back(cardPlayer1);
-                cardGame_.push_back(cardPlayer2);
-            }
+        }else{
+            throw ::invalid_argument("Player has no card.");
         }
-    }
 }
 
 
