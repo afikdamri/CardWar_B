@@ -13,16 +13,17 @@ namespace ariel {
     private:
         string name_;
         vector<Card> myStack_;
-        vector<Card> cardsTaken_;
+        int cardsTaken_;
 
     public:
         Player(const string& name);
         ~Player();
         void add(Card& card);
-        void addcardsTaken(Card& card);
+        void addcardsTaken();
         int stacksize() const;
         int cardesTaken() const;
         string getName() const;
+        void takeCard();
         Card getCard();
     };
 

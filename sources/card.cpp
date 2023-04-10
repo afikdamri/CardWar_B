@@ -12,67 +12,68 @@ namespace ariel {
         return this->rank_;
     }
 
-    void Card::printSuit() const{
+    string Card::printSuit() const{
+        string suit = "";
         if(suit_ == Suit::CLUBS){
-            std::cout << "Clubs";
+            suit = "Clubs";
         }
         else if(suit_ == Suit::DIAMONDS){
-            std::cout << "Diamonds";
+            suit = "Diamonds";
         }   
         else if(suit_ == Suit::HEARTS){
-            std::cout << "Hearts";
+            suit = "Hearts";
         }
         else if(suit_ == Suit::SPADES){
-            std::cout << "Spades";
+            suit = "Spades";
         }
+        return suit;
     }
 
-    void Card::printRank() const{
+    string Card::printRank() const{
+        string rank = "";
         if(rank_ == Rank::ACE){
-            std::cout << "1";
+            rank = "1";
         }
         else if(rank_ == Rank::TWO){
-            std::cout << "2";
+            rank = "2";
         }   
         else if(rank_ == Rank::THREE){
-            std::cout << "3";
+            rank = "3";
         }
         else if(rank_ == Rank::FOUR){
-            std::cout << "4";
+            rank = "4";
         }
         else if(rank_ == Rank::FIVE){
-            std::cout << "5";
+            rank = "5";
         }   
         else if(rank_ == Rank::SIX){
-            std::cout << "6";
+            rank = "6";
         }
         else if(rank_ == Rank::SEVEN){
-            std::cout << "7";
+            rank = "7";
         }
         else if(rank_ == Rank::EIGHT){
-            std::cout << "8";
+            rank = "8";
         }   
         else if(rank_ == Rank::NINE){
-            std::cout << "9";
+            rank = "9";
         }
         else if(rank_ == Rank::TEN){
-            std::cout << "10";
+            rank = "10";
         }
         else if(rank_ == Rank::JACK){
-            std::cout << "Jack";
+            rank = "Jack";
         }
         else if(rank_ == Rank::QUEEN){
-            std::cout << "Queen";
+            rank = "Queen";
         }
         else if(rank_ == Rank::KING){
-            std::cout << "King";
+            rank = "King";
         }
+        return rank;
     }
-    void Card::toString() const{
-        printRank();
-        std::cout << "of";
-        printSuit();
-        std::cout << endl;
+    string Card::toString() const{
+        return printRank() + " of " + printSuit();
     }
 
     bool Card::operator==(const Card& card) const {

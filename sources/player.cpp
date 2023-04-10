@@ -14,25 +14,37 @@ namespace ariel
 
     void Player::add(Card& card){
         myStack_.push_back(card);
-        addcardsTaken(card);
+        cout<< card.toString();
+        for (const Card& card : myStack_) {
+            card.toString();
+        }
+        cout << "--------"<<endl;
+        addcardsTaken();
     }
 
     int Player::stacksize() const{
         return myStack_.size();
     }
 
-    Card Player::getCard(){
-        if(myStack_.size() != 0){
-            Card firstCard = myStack_.front();
-            myStack_.erase(myStack_.begin());
-            return firstCard;
-        }else{
-             throw runtime_error("The deck is empty!");
+    Card Player::getCard() {
+        if (myStack_.empty()) {
+            throw runtime_error("The deck is empty!");
         }
+        Card firstCard = myStack_.front();
+        myStack_.erase(myStack_.begin());
+        return firstCard;
     }
 
-    void Player::addcardsTaken(Card& card){
-        cardsTaken_.pop_back();
+    void Player::addcardsTaken(){
+        myStack_.pop_back();
+    }
+
+    int Player::cardesTaken() const {
+        return cardsTaken_;
+    }
+
+    void Player::takeCard() {
+        cardsTaken_++;
     }
 
     Player::~Player() {}

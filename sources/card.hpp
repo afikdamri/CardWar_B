@@ -34,9 +34,9 @@ namespace ariel{
         ~Card(){};
         Suit getSuit() const;
         Rank getRank() const;
-        void printSuit() const;
-        void printRank() const;
-        void toString() const;
+        string printSuit() const;
+        string printRank() const;
+        string toString() const;
         bool operator>(const Card& card) const;
         bool operator<(const Card& card) const;
         bool operator==(const Card& card) const;

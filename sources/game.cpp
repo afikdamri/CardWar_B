@@ -49,29 +49,65 @@ namespace ariel {
     }
 
     void Game::playTurn(){
-    if(player1_.stacksize() != 0 && player2_.stacksize() != 0){
-        Card cardPlayer1 = player1_.getCard();
-        Card cardPlayer2 = player2_.getCard();
-        cardGame_.push_back(cardPlayer1);
-        cardGame_.push_back(cardPlayer2);
-        if(cardGame_.back() > cardGame_[cardGame_.size()-2]){
-          for (size_t i = 0; i < cardGame_.size(); i++) {
+        cout << player2_.stacksize();
+        if(player1_.stacksize() != 0 && player2_.stacksize() != 0){
+            Card cardPlayer1 = player1_.getCard();
+            Card cardPlayer2 = player2_.getCard();
+            cout << cardPlayer1.toString()<< "1";
+            cout << cardPlayer2.toString()<< "2";
+            cardGame_.push_back(cardPlayer1);
+            cardGame_.push_back(cardPlayer2);
+            log_.push_back(make_pair(cardPlayer1, cardPlayer2));
+        if (cardGame_.size() >= 2 && cardGame_.back() > cardGame_[cardGame_.size() - 2]) {
+            for (size_t i = 0; i < cardGame_.size(); i++) {
                 player2_.add(cardGame_[i]);
+                player1_.takeCard();
             }
             cardGame_.clear();
-        }else if(cardGame_.back() < cardGame_[cardGame_.size()-2]){
+        } else if (cardGame_.size() >= 2 && cardGame_.back() < cardGame_[cardGame_.size() - 2]) {
             for (size_t i = 0; i < cardGame_.size(); i++) {
                 player1_.add(cardGame_[i]);
+                player2_.takeCard();
             }
             cardGame_.clear();
-            }
-            else{
-                Card cardPlayer1 = player1_.getCard();
-                Card cardPlayer2 = player2_.getCard();
+        } else {
+            cardPlayer1 = player1_.getCard();
+            cardPlayer2 = player2_.getCard();
+            if (player1_.stacksize() != 0 && player2_.stacksize() != 0) {
                 cardGame_.push_back(cardPlayer1);
                 cardGame_.push_back(cardPlayer2);
-
             }
         }
     }
+}
+
+
+    void Game::playAll() {
+        while (player1_.stacksize() != 0 && player2_.stacksize() != 0) {
+            playTurn();
+        }
+        //printWiner();
+    }
+
+        void Game::printLastTurn() {
+            if (log_.empty()) {
+                cout << "No turns have been played yet." << endl;
+                return;
+            }
+            pair<Card, Card>& lastPair = log_.back();
+            Card firstCard = lastPair.first;
+            Card secondCard = lastPair.second;
+            cout << player1_.getName() << " played " << firstCard.toString();
+            cout << ", " << player2_.getName() << " played " << secondCard.toString();
+            if (firstCard < secondCard) {
+                cout << ", " << player2_.getName() << " wins!" << endl;
+            } else if (firstCard > secondCard) {
+                cout << ", " << player1_.getName() << " wins!" << endl;
+            } else {
+                cout << ", it's a draw!" << endl;
+            }
+        }
+
+
+
 }
