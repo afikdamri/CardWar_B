@@ -7,6 +7,7 @@ using namespace std;
 
 namespace ariel {
     Game::Game(Player& player1, Player& player2) : player1_(player1), player2_(player2) {
+        draw_=0;
         vector<Card> cards;
         for (int row = (int)Rank::TWO; row <= (int)Rank::ACE; row++) {
             for (int col = (int)Suit::CLUBS; col <= (int)Suit::SPADES; col++) {
@@ -49,12 +50,9 @@ namespace ariel {
     }
 
     void Game::playTurn(){
-        cout << player2_.stacksize();
         if(player1_.stacksize() != 0 && player2_.stacksize() != 0){
             Card cardPlayer1 = player1_.getCard();
             Card cardPlayer2 = player2_.getCard();
-            cout << cardPlayer1.toString()<< "1";
-            cout << cardPlayer2.toString()<< "2";
             cardGame_.push_back(cardPlayer1);
             cardGame_.push_back(cardPlayer2);
             log_.push_back(make_pair(cardPlayer1, cardPlayer2));
@@ -73,6 +71,7 @@ namespace ariel {
         } else {
             cardPlayer1 = player1_.getCard();
             cardPlayer2 = player2_.getCard();
+            draw_++;
             if (player1_.stacksize() != 0 && player2_.stacksize() != 0) {
                 cardGame_.push_back(cardPlayer1);
                 cardGame_.push_back(cardPlayer2);
@@ -108,6 +107,30 @@ namespace ariel {
             }
         }
 
+    void Game::printLog(){
+        for (const auto& pair : log_) {
+            cout << player1_.getName() << " played " << pair.first.toString();
+            cout <<", "<< player2_.getName() << " played " << pair.second.toString() << endl;
+        }
+    }
 
+    void Game::printStats() {
+        int totalGames = player1_.cardesTaken() + player2_.cardesTaken() + draw_;
+        double p1WinRate = ((double) player1_.cardesTaken() / totalGames)*100;
+        double p2WinRate = ((double) player2_.cardesTaken() / totalGames)*100;
+        double drawRate = ((double) draw_ / totalGames)*100;
+
+        cout << "Player " << player1_.getName() << ":" << endl;
+        cout << "Win rate: " << p1WinRate <<"%"<<endl;
+        cout << "Cards won: " << player1_.cardesTaken() << endl;
+        cout << "Draw rate: " << drawRate <<"%"<<endl;
+        cout << "Draws: " << draw_ << endl << endl;
+
+        cout << "Player " << player2_.getName() << ":" << endl;
+        cout << "Win rate: " << p2WinRate << "%"<<endl;
+        cout << "Cards won: " << player2_.cardesTaken() << endl;
+        cout << "Draw rate: " << drawRate <<"%"<< endl;
+        cout << "Draws: " << draw_ << endl << endl;
+    }
 
 }

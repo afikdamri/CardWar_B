@@ -12,6 +12,7 @@ namespace ariel{
         vector<Card> deck_;
         vector<Card> cardGame_;
         vector<pair<Card,Card>> log_;
+        int draw_;
     public:
         Game(Player& Player1, Player& Player2);
         ~Game(){}
