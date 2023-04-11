@@ -6,9 +6,7 @@ using namespace std;
 
 namespace ariel
 {
-    Player::Player(const string& name) : name_(name) {
-        cardsTaken_=0;
-    }
+    Player::Player(const string& name) : name_(name) {}
 
     string Player::getName() const{
         return name_;
@@ -16,7 +14,6 @@ namespace ariel
 
     void Player::add(const Card& card){
         myStack_.push_back(card);
-        //addcardsTaken();
     }
 
     int Player::stacksize() const{
@@ -32,16 +29,14 @@ namespace ariel
         return firstCard;
     }
 
-    void Player::addcardsTaken(){
-        myStack_.pop_back();
-    }
-
     int Player::cardesTaken() const {
-        return cardsTaken_;
+        return cardsTaken_.size();
     }
 
-    void Player::takeCard() {
-        cardsTaken_++;
+    void Player::takeCard(const vector<Card>& card) {
+        for(const Card& c: card){
+            cardsTaken_.push_back(c);
+        }
     }
   
 }

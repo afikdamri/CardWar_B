@@ -15,7 +15,6 @@ namespace ariel{
         int draw_;
     public:
         Game(Player& Player1, Player& Player2);
-        ~Game(){}
         void playAll();
         void printWiner();
         void printLog();

@@ -36,16 +36,15 @@ namespace ariel {
     }
 
     void Game::printWiner() {
-        if (player1_.stacksize() == 0 || player2_.stacksize() == 0) {
-            string name = "";
-            if (player1_.stacksize() > player2_.stacksize()) {
-                name = player1_.getName();
-            } else {
-                name = player2_.getName();
-            }
+        string name = "";
+        if (player1_.cardesTaken() > player2_.cardesTaken()) {
+            name = player1_.getName();
             cout << name << " is the winner !!" << endl;
-        } else {
-            cout << "There is no winner yet." << endl;
+        }else if(player1_.cardesTaken() < player2_.cardesTaken()){
+            name = player2_.getName();
+            cout << name << "is the winner !!" << endl;
+        }else if(player1_.cardesTaken() == player2_.cardesTaken()){
+            cout <<" its a tie !!" << endl;
         }
     }
 
@@ -59,26 +58,40 @@ namespace ariel {
             cardGame_.push_back(cardPlayer1);
             cardGame_.push_back(cardPlayer2);
             log_.push_back(make_pair(cardPlayer1, cardPlayer2));
-            if (cardGame_.size() >= 2 && cardGame_.back() > cardGame_[cardGame_.size() - 2]) {
-                for (size_t i = 0; i < cardGame_.size(); i++) {
-                    player2_.add(cardGame_[i]);
-                    player1_.takeCard();
-                }
+            if (cardPlayer1 > cardPlayer2){
+               player1_.takeCard({cardPlayer1, cardPlayer2});
+               cardGame_.clear();
+            }
+            else if (cardPlayer1 < cardPlayer2) {
+                player2_.takeCard({cardPlayer1, cardPlayer2});
                 cardGame_.clear();
-            } else if (cardGame_.size() >= 2 && cardGame_.back() < cardGame_[cardGame_.size() - 2]) {
-                for (size_t i = 0; i < cardGame_.size(); i++) {
-                    player1_.add(cardGame_[i]);
-                    player2_.takeCard();
-                }
-                cardGame_.clear();
-            } else {
-                cardPlayer1 = player1_.getCard();
-                cardPlayer2 = player2_.getCard();
-                draw_++;
-                if (player1_.stacksize() != 0 && player2_.stacksize() != 0) {
+            } 
+            else {
+                while (cardPlayer1 == cardPlayer2 && player1_.stacksize() > 0 && player2_.stacksize() > 0)
+                {
+                    draw_++;
+                    cardGame_.push_back(player1_.getCard());
+                    cardGame_.push_back(player2_.getCard());
+                    cardPlayer1 = player1_.getCard();
+                    cardPlayer2 = player2_.getCard();
                     cardGame_.push_back(cardPlayer1);
                     cardGame_.push_back(cardPlayer2);
+
                 }
+                if(cardPlayer1 > cardPlayer2){
+                    player1_.takeCard(cardGame_);
+                }else if(cardPlayer1 < cardPlayer2){
+                    player2_.takeCard(cardGame_);
+                }else{
+                    for (size_t i = 0; i < cardGame_.size(); i++) {
+                        if(i%2 == 1){
+                            player1_.add(cardGame_[i]);
+                        }else{
+                            player2_.add(cardGame_[i]);
+                        }
+                    }
+                }
+                
             }
         }else{
             throw ::invalid_argument("Player has no card.");
@@ -87,11 +100,15 @@ namespace ariel {
 
 
     void Game::playAll() {
-        while (player1_.stacksize() != 0 && player2_.stacksize() != 0) {
+    while (player1_.stacksize() > 0 && player2_.stacksize() > 0) {
+        try {
             playTurn();
+        } catch (const std::exception& e) {
+            std::cout << e.what() << std::endl;
+            break;
         }
-        //printWiner();
     }
+}
 
         void Game::printLastTurn() {
             if (log_.empty()) {

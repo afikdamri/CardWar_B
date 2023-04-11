@@ -31,7 +31,6 @@ namespace ariel{
         Rank rank_;
     public:
         Card(Suit suit, Rank rank);
-        ~Card(){};
         Suit getSuit() const;
         Rank getRank() const;
         string printSuit() const;
